@@ -6,9 +6,9 @@ A customized Neovim setup with tmux integration for seamless project navigation.
 
 ### Prerequisites
 
-- Neovim
-- [ripgrep](https://github.com/BurntSushi/ripgrep) for fast file searching
-- tmux for session management
+- **[Neovim](https://github.com/neovim/neovim)**
+- **[ripgrep](https://github.com/BurntSushi/ripgrep)** – Used for efficient file searching.
+- **[tmux](https://github.com/tmux/tmux)** – For managing terminal sessions.
 
 ### Setup Steps
 
