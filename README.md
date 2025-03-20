@@ -153,7 +153,3 @@ Most of the configuration is split into separate files under the `lua/nicccls/la
 - LSP configuration in `lsp.lua`
 - Key mappings in `remap.lua`
 - Editor settings in `set.lua`
-
-## License
-
-[MIT](LICENSE)
