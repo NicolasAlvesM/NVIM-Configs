@@ -2,20 +2,27 @@
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
+vim.keymap.set("n", "<M-Down>", ":m .+1<CR>==")
+vim.keymap.set("n", "<M-Up>", ":m .-2<CR>==") 
 vim.keymap.set("v", "<M-Down>", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "<M-Up>", ":m '<-2<CR>gv=gv") 
 
+vim.keymap.set("n", "<C-M-Down>", "yy<Cmd>put<CR>")
+vim.keymap.set("n", "<C-M-Up>", "yyP")
+vim.keymap.set("v", "<C-M-Down>", "y`><Cmd>put<CR>gv")
+vim.keymap.set("v", "<C-M-Up>", "y`<<Cmd>put!<CR>gv")
+
+vim.keymap.set("n", "<leader>b", "<C-O>")
+
 vim.keymap.set("n", "J", "mzJ`z")
-vim.keymap.set("n", "<C-Up>", "<C-d>zz")
-vim.keymap.set("n", "<C-Down>", "<C-u>zz")
+vim.keymap.set("n", "<C-Up>", "<C-u>zz")
+vim.keymap.set("n", "<C-Down>", "<C-d>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("n", "=ap", "ma=ap'a")
 
--- greatest remap ever
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
--- next greatest remap ever : asbjornHaland
 vim.keymap.set("n", "<C-c>", [["+yiw]])
 vim.keymap.set("v", "<C-c>", [["+Y]])
 
@@ -28,12 +35,14 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+vim.keymap.set("n", "<S-M-f>", vim.lsp.buf.format)
 
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
-vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
-vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
+vim.keymap.set("n", "<leader>EN", "<cmd>lnext<CR>zz")
+vim.keymap.set("n", "<leader>EP", "<cmd>lprev<CR>zz")
+vim.keymap.set('n', '<leader>ce', ':cclose<CR>')
+vim.keymap.set('n', '<leader>oe', ':copen<CR>')
 
 vim.keymap.set("n", "<C-d>", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
