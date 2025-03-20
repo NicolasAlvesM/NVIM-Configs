@@ -29,10 +29,10 @@ A customized Neovim setup with tmux integration for seamless project navigation.
 
 3. **Configure project search paths**
    
-   Edit line 6 in `tmux-sessionizer` to set your project directories:
+   Edit line 27 in `tmux-sessionizer` to set your project directories:
    ```lua
    -- Change these paths to your project folders
-   local find_paths = { "~/projects", "~/work", "~/dev" }
+   selected=$(find ~/projetos -mindepth 1 -maxdepth 1 -type d | fzf)
    ```
 
 4. **Set up tmux-sessionizer**
