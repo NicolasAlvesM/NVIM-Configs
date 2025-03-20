@@ -69,15 +69,4 @@ A customized Neovim setup with tmux integration for seamless project navigation.
 ## Features
 
 - Fast project navigation with tmux integration
-- Project-wide search with ripgrep
 - Customized Neovim experience with modern plugins
-
-## Usage
-
-- Press `Ctrl+f` in your shell to quickly navigate between projects
-- Press `prefix+f` in tmux to open the project selector in a new window
-- [Add other key features or keybindings]
-
-## Customization
-
-See comments in the configuration files for customization options.
