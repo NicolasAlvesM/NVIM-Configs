@@ -3,9 +3,9 @@ vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
 vim.keymap.set("n", "<M-Down>", ":m .+1<CR>==")
-vim.keymap.set("n", "<M-Up>", ":m .-2<CR>==") 
+vim.keymap.set("n", "<M-Up>", ":m .-2<CR>==")
 vim.keymap.set("v", "<M-Down>", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "<M-Up>", ":m '<-2<CR>gv=gv") 
+vim.keymap.set("v", "<M-Up>", ":m '<-2<CR>gv=gv")
 vim.keymap.set("n", "<C-Up>", "[{")
 vim.keymap.set("n", "<C-Down>", "]}")
 
@@ -89,3 +89,97 @@ vim.g.VM_maps = {
 
 vim.keymap.set('n', '<C-d>', '<Nop>')
 vim.keymap.set('v', '<C-d>', '<Nop>')
+
+vim.keymap.set("n", "<leader>cf", function()
+    local current_dir = vim.fn.expand("%:p:h")
+
+    local filename = vim.fn.input("Nome do arquivo: ", current_dir .. "/", "file")
+
+    if filename == "" then
+        return
+    end
+
+    local dir = vim.fn.fnamemodify(filename, ":h")
+    if vim.fn.isdirectory(dir) == 0 then
+        vim.fn.mkdir(dir, "p")
+    end
+
+    vim.cmd("edit " .. filename)
+
+    vim.cmd("write")
+
+    print("Arquivo criado: " .. filename)
+end)
+
+vim.keymap.set("n", "<leader>rn", function()
+    local current_buffer = vim.api.nvim_get_current_buf()
+    local current_file = vim.api.nvim_buf_get_name(current_buffer)
+    local current_dir = vim.fn.fnamemodify(current_file, ":h")
+    local current_name = vim.fn.fnamemodify(current_file, ":t")
+
+    print("Arquivo atual: " .. current_file)
+
+    if vim.api.nvim_buf_get_option(current_buffer, "modified") then
+        vim.cmd("write")
+    end
+
+    local new_name = vim.fn.input("Novo nome: ", current_name, "file")
+
+    if new_name == "" or new_name == current_name then
+        print("Operação cancelada ou mesmo nome.")
+        return
+    end
+
+    local new_path = current_dir .. "/" .. new_name
+
+    if vim.fn.filereadable(new_path) == 1 then
+        local choice = vim.fn.input("Arquivo já existe. Substituir? (s/n): ")
+        if choice:lower() ~= "s" then
+            print("Operação cancelada.")
+            return
+        end
+    end
+
+    local cmd = string.format("mv '%s' '%s'",
+        current_file:gsub("'", "'\\''"),
+        new_path:gsub("'", "'\\''"))
+
+    print("Executando comando: " .. cmd)
+    local output = vim.fn.system(cmd)
+    local success = vim.v.shell_error == 0
+
+    if success then
+        vim.cmd("edit! " .. vim.fn.fnameescape(new_path))
+
+        vim.cmd("bwipeout " .. current_buffer)
+
+        print("Arquivo renomeado com sucesso para: " .. new_name)
+    else
+        print("Erro ao renomear: " .. output)
+    end
+end)
+
+vim.keymap.set("n", "<leader>df", function()
+    local current_file = vim.fn.expand("%")
+    local current_path = vim.fn.expand("%:p")
+
+    print("Tentando excluir: " .. current_file)
+
+    local choice = vim.fn.input("Tem certeza que deseja excluir '" .. current_file .. "'? (s/n): ")
+    if choice:lower() ~= "s" then
+        print("Operação cancelada.")
+        return
+    end
+
+    local ok, err = pcall(function()
+        vim.cmd("bdelete!")
+
+        os.execute("rm '" .. current_path:gsub("'", "'\\''") .. "'")
+    end)
+
+    if ok then
+        print("Arquivo excluído: " .. current_file)
+    else
+        print("Erro ao excluir o arquivo: " .. tostring(err))
+    end
+end)
